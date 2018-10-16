@@ -5,6 +5,8 @@
 % if your formulas for x1, z1, etc. makes sense. Example: q = [-pi/6, pi/6,
 % pi/8]
 %%
+
+
 function visualize(q)
     [~, ~, ~, l1, l2, l3, ~] = set_parameters;
     
@@ -35,11 +37,11 @@ function visualize(q)
     plot([0, x_h], [0, z_h], 'linewidth', lw); 
     hold on
     % link2
-    plot([x_swf, x_h], [z_swf, z_h], 'linewidth', lw); 
+    plot([x_swf, x_h], [z_swh, z_h], 'linewidth', lw); 
     hold on
     
     % link3
-    plot([x_h, x_t], [z_h, z_t], 'linewidth', lw);
+    plot([x_h, x_t], [z_h, z_t], 'linewith', lw);
     hold on
     
     axis 'square'
@@ -51,8 +53,8 @@ function visualize(q)
     plot(x1, z1, '.', 'markersize', mz); 
     
     % m2
-    plot(x2, z2, '.', 'markersize', mz); 
+     plot(x2, z2, '.', 'markersize', mz); 
     
     % m3
-    plot(x3, z3, '.', 'markersize', mz); 
+     plot(x3, z3, '.', 'markersize', mz); 
 end
