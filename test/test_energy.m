@@ -12,9 +12,9 @@ k = 1;
     
     energy(k) = eval_energy(q, dq);
     visualize(q)
-    pause        
+    %pause %to stop or not on each iteration       
     k = k +1;
     end
-     
+figure()
 plot(energy)
 end
