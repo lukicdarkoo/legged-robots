@@ -15,7 +15,7 @@ A_p = eval_A_p(q_p);
 size(A_p)
 size(A_m)
 size(dq_m)
-dq_p = A_p \ A_m * dq_m;
+dq_p = dq_m * A_p \ A_m;
 % Note: To solve the equation Ax = b you could use x = A \ b to avoid taking
 % inverse of A. 
 
