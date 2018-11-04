@@ -10,11 +10,13 @@ function test_energy()
         dq = [ 1, 0.2, 0 ];
         
         if alpha >= pi/4 - 0.1
-            [q_p, dq_p] = impact(q, dq);
+            
             q = q_p;
             dq = dq_p;
         end
 
+        [q_p, dq_p] = impact(q, dq);
+        
         [T, V] = eval_energy(q, dq);
         kinetic(k) = T;
         potential(k) = V;
