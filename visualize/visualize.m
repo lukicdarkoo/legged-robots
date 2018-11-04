@@ -28,11 +28,12 @@ function visualize(q)
     %% 
     % Here plot a schematic of the configuration of three link biped at the
     % generalized coordinate q = [q1, q2, q3]:
-    close all
+    %close all
+    clf
     lw = 2;
     % links
     % link1
-    plot([0, x_h], [0, z_h], 'linewidth', lw); 
+    plot([0, x_h], [0, z_h], 'linewidth', lw);
     hold on
     % link2
     plot([x_swf, x_h], [z_swf, z_h], 'linewidth', lw); 
@@ -43,7 +44,7 @@ function visualize(q)
     
     axis 'square'
     xlim([-1, 1]);
-    ylim([0, 1.2]);
+    ylim([-0.8, 1.2]);
     
     % point masses
     mz = 40;
