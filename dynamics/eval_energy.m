@@ -1,14 +1,18 @@
 function [T, V] = eval_energy(q, dq)
-[m1, m2, m3, l1, l2, l3, g] = set_parameters;
+    [m1, m2, m3, l1, l2, l3, g] = set_parameters;
 
-dq1=dq(1);
-dq2=dq(2);
-dq3=dq(3);
-q1=q(1);
-q2=q(2);
-q3=q(3);
+    dq1 = dq(1);
+    dq2 = dq(2);
+    dq3 = dq(3);
+    q1 = q(1);
+    q2 = q(2);
+    q3 = q(3);
 
-T = energy_T_tmp(dq1,dq2,dq3,l1,l2,l3,m1,m2,m3,q1,q2,q3);
-V = energy_V_tmp(g,l1,l2,l3,m1,m2,m3,q1,q2,q3);
+    t2 = dq1.^2;
+    t3 = l1.^2;
+    T = dq2.^2.*l2.^2.*m2.*(1.0./8.0)+dq3.^2.*l3.^2.*m3.*(1.0./8.0)+m1.*t2.*t3.*(1.0./8.0)+m2.*t2.*t3.*(1.0./2.0)+m3.*t2.*t3.*(1.0./2.0)-dq1.*dq2.*l1.*l2.*m2.*cos(q1-q2).*(1.0./2.0)+dq1.*dq3.*l1.*l3.*m3.*cos(q1-q3).*(1.0./2.0);
 
+    t2 = cos(q1);
+    t3 = l1.*t2;
+    V = g.*m2.*(t3-l2.*cos(q2).*(1.0./2.0))+g.*m3.*(t3+l3.*cos(q3).*(1.0./2.0))+g.*l1.*m1.*t2.*(1.0./2.0);
 end
