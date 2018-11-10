@@ -6,6 +6,7 @@
 % number of steps the robot is supposed to take
 % As an example you can use q0 = [pi/6; -pi/3; 0] and dq0 = [0;0;0]. 
 
+% solve_eqns([pi/6; -pi/3; 0], [0;0;0], 1)
 function sln = solve_eqns(q0, dq0, num_steps)
 
 options = odeset('RelTol', 1e-5, 'Events', @event_func);
@@ -38,7 +39,8 @@ for i = 1:num_steps
     [q_p, dq_p] = impact(YE(1:3)', YE(4:6)');
     y0(1:3) = q_p;
     y0(4:6) = dq_p;
-
+    
+    
     t0 = T(end);
     tspan = t0:h:t0+tmax;
 end
