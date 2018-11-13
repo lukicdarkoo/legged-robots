@@ -11,9 +11,7 @@ dq = y(4:6);
 
 [x_swf, z_swf, dx_swf, dz_swf] = kin_swf(q, dq);
 
-% TODO: I am not sure if we should look at speed or position.
-% Position makes sense, but we need velocity because of direction.
-value = z_swf + 0.01;
+value = z_swf + 0.001;
 isterminal = 1;
 direction = -1;
 
