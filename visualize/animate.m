@@ -16,13 +16,16 @@ for j = 1:num_steps
     [N, ~] = size(Y);
     for i = 1:skip:N % what does skip do?
         q = Y(i, 1:3);
-        pause(0.002);  % pause for 2 mili-seconds
+        dq = Y(i, 4:6);
+        %pause(0.002);  % pause for 2 milli-seconds
+        pause(0.05);
         % visualize :
         visualize(q, r0);
         hold off
     end
     % update r0:
-    r0 = r0 + [0.01; 0]; % TODO: It's not that simple :)
+    [x_swf, ~, ~, ~] = kin_swf(q, dq);
+    r0 = r0 + [x_swf; 0]; % TODO: It's not that simple :)
 end
 t_anim = toc();
 
