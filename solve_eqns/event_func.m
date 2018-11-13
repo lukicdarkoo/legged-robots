@@ -13,7 +13,7 @@ dq = y(4:6);
 
 % TODO: I am not sure if we should look at speed or position.
 % Position makes sense, but we need velocity because of direction.
-value = z_swf + 0.001;
+value = z_swf + 0.01;
 isterminal = 1;
 direction = -1;
 

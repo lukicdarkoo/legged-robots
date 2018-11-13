@@ -1,0 +1,22 @@
+Note that the visualize.m function has an extra input r0 which is the
+position of the stance foot in the global frame. Why do we need this?
+
+% We need it because we want to swap the leg type (stance/swing) without 
+% changing their position. In this way we can achieve a realistic behaviour 
+% of walking.
+
+How does 'skip' affect this value?
+
+% since we are skipping 'skip' frames, the animation time is inversely
+% proportional to the 'skip' value.
+
+What does a real time factor of 1 mean?
+
+% It means that the time it takes for MATLAB to animate the simulations is
+% equal to the simulation time.
+
+How about a real time factor smaller than 1?
+
+% It means that the time it takes for MATLAB to animate the simulations is
+% longer than the simulation time (e.g. if the real time factor is 0.1, it
+% means that the animation takes 10 times more time than the simulation)
