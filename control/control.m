@@ -1,7 +1,7 @@
 function u = control(t, q, dq, q0, dq0, step_number)
 
 params.kp_t = 311;
-params.kd_t = 36;
+params.kd_t = 80;
 params.kp_s = 202;
 params.kd_s = 5;
 
@@ -26,4 +26,7 @@ params.t_target = pi/10;
 params.alfa = 5;
 u = htan_controller(q, dq, params);
 
+%% hyperbolic tangent 2
+% params.alfa = 5;
+% u = htan2_controller(q, dq, params);
 end

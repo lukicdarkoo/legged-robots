@@ -1,7 +1,8 @@
 function [params_opt] = optimize(q0, dq0, params, idx, range, num_steps, c_type)
 
 max = -realmax;
-for i = 1:length(range)
+M = length(range);
+for i = 1:M
     params.(idx) = range(i);
     sln = solve_eqns_opt(q0, dq0, num_steps, params, c_type);
     r0 = [0; 0];
@@ -12,7 +13,7 @@ for i = 1:length(range)
         [x0, ~, ~, ~] = kin_swf(q);
         r0 = r0 + [x0; 0];
     end
-    fprintf('\niter: %d, %s: %d, distance: %g', i, idx, range(i), r0(1));
+    fprintf('\niter: %d/%d, %s: %d, distance: %g', i, M, idx, range(i), r0(1));
     if r0(1) > max
         max = r0(1);
         n = i;

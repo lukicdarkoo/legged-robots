@@ -1,56 +1,32 @@
 function u = control(t, q, dq, q0, dq0, step_number)
-u = zeros(2, 1);
 
-params.kp_t = 307;
-params.kd_t = 32;
 params.kp_s = 202;
 params.kd_s = 5;
+params.kp_t = 311;
+params.kd_t = 80;
 
 params.sw_target = pi/8;
 params.sw_delay = 0;
 params.t_target = pi/10;
-%% wrong controller
-% u(2) = kp_t * (q(3) - t_target) + kd_t * dq(3);
-% 
-% y = q(2) + sw_target;
-% dy = dq(2) * sin(q(1) + sw_delay);
-% u(1) = kp_s * y + kd_s * dy;
 
-%% Cosine controller
-% d = 1;
-% y = (q(2) + sw_target) * 0.5 * (cos(q(1) - sw_delay)^d + 1);
-% dy = 0.5 * (cos(q(1) - sw_delay)^d  + 1 + (-sw_target - q(2)) * d * cos(q(1) - sw_delay)^(d - 1) * (sin(q(1) - sw_delay)));
-% 
-% u(1) = kp_s * y + kd_s * dy;
-% 
-% u(2) = kp_t * (q(3) - t_target) + kd_t * dq(3);
+%% wrong controller
+% u = wrong_controller(q, dq, params);
+
+%% cosine controller
+% u = cos_controller(q, dq, params);
 
 %% cosine trajectory controller
-% q_max = pi/3;
-% h = 15;
-% [y, dy] = cosine(q, dq, q_max, h);
-% 
-% u(1) = kp_s * y + kd_s * dy;
-% u(2) = kp_t * (q(3) - t_target) + kd_t * dq(3);
-
+% u = cos_traj_controller(q, dq, params);
 
 %% updated spline controller
-
 % params.alfa = 0.01;
 % u = spline_controller(q, dq, params)
 
 %% hyperbolic tangent controller
-alfa = 5;
-[y, dy] = hyp_tan(q, dq, params.sw_target, alfa);
-u(1) = params.kp_s * y + params.kd_s * dy;
-u(2) = params.kp_t * (q(3) - params.t_target) + kd_t * dq(3);
+params.alfa = 5;
+u = htan_controller(q, dq, params);
 
-%% updated spline controller
-% 
-% params.alfa = 0.01;
-% u = spline_controller(q, dq, params);
-
-%% hyperbolic tangent controller
+%% hyperbolic tangent 2
 % params.alfa = 5;
-% u = htan_controller(q, dq, params);
+% u = htan2_controller(q, dq, params);
 end
