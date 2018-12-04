@@ -1,4 +1,4 @@
-function dy = eqns_opt(t, y, y0, step_number, params)
+function dy = eqns_opt(t, y, y0, step_number, params, c_type)
 % n this is the dimension of the ODE, note that n is 2*DOF, why? 
 % y1 = q1, y2 = q2, y3 = q3, y4 = dq1, y5 = dq2, y6 = dq3
 % y0 is the states right after impact
@@ -14,7 +14,7 @@ C = eval_C(q, dq);
 G = eval_G(q);
 B = eval_B();
 
-u = control_opt(q, dq, params); 
+u = control_opt(q, dq, params, c_type); 
 
 n = 6;   
 dy = zeros(n, 1);

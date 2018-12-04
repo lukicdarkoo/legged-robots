@@ -6,7 +6,7 @@
 function animate(sln)
 
 figure();
-skip = 4;
+skip = 5;
 tic();
 num_steps = length(sln.T);
 r0 = [0; 0];
@@ -15,7 +15,7 @@ for j = 1:num_steps
     [N, ~] = size(Y);
     for i = 1:skip:N
         q = Y(i, 1:3);
-        pause(0.002);
+        pause(0.005);
         visualize(q, r0);
         hold off
     end
