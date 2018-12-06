@@ -1,4 +1,6 @@
 addpath('./funct');
+clc
+close all
 
 global HPARAMS POP
 HPARAMS = [
@@ -23,7 +25,6 @@ ga_options = struct('Generations', 10, 'PopulationSize', 50);
 IntCon = [1 2 3 4];
 optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values, [], IntCon, ga_options);
 
-energy = sum(E);
 fprintf('Optimal Parameters:\n  kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %.5g, t_target: %.5g, alpha: %.5g \n', optimals);
 
 xlswrite('population.xlsx', POP);
