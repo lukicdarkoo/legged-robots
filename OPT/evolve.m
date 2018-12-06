@@ -1,6 +1,6 @@
 addpath('./funct');
 
-global HPARAMS E
+global HPARAMS POP
 HPARAMS = [
     {'kp_t', 200, 400};
     {'kd_t', 10, 40};
@@ -10,7 +10,11 @@ HPARAMS = [
     {'t_target', 0, pi/11}
 ];
 
-
+try
+    POP = xlsread('population.xlsx');
+catch
+    POP = zeros(1, size(HPARAMS, 1) + 3);
+end
 
 % Run evolutive algorithm
 min_values = cell2mat(HPARAMS(:, 2));
@@ -22,8 +26,10 @@ optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values
 energy = sum(E);
 fprintf('Optimal Parameters:\n  kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %.5g, t_target: %.5g, alpha: %.5g \n', optimals);
 
+xlswrite('population.xlsx', POP);
 
 function val = fitness(chromosome)
+    global POP
     params.sw_target = pi/10;
     q = [0; 0; 0];
     dq = [0; 0; 0];
@@ -42,6 +48,7 @@ function val = fitness(chromosome)
         val = - dist;
         dist
         % fprintf('kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %3.4g, t_target: %3.4g, alpha: %3.4g, dist: %3.4g, energy: %.2g \n\n', chromosome, dist, energy);
+        POP = cat(1, POP, cat(2, chromosome, dist, time, energy));
     catch
         warning('There was a problem with state-space calculation')
         val = realmax;
