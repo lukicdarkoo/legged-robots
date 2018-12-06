@@ -26,8 +26,6 @@ fprintf('Optimal Parameters:\n  kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_t
 
 
 function val = fitness(chromosome)
-    global E
-    
     params.kp_t = val_by_id(chromosome, 'kp_t');
     params.kd_t = val_by_id(chromosome, 'kd_t');
     params.kp_s = val_by_id(chromosome, 'kp_s');
@@ -36,14 +34,11 @@ function val = fitness(chromosome)
     params.t_target = val_by_id(chromosome, 't_target');
     params.alfa = val_by_id(chromosome, 'alfa');
     
-    E = zeros(2, 1);
-    
     % Evaluate it here
     q = [0; 0; 0];
     dq = [0.1; 0; 0];
     steps = 5;
-    [dist, time] = optimize_dist(q, dq, params, steps, 'hyp_tan');
-    energy = sum(E);
+    [dist, time, energy] = optimize_dist(q, dq, params, steps, 'hyp_tan');
     val = - dist;
     fprintf('kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %3.4g, t_target: %3.4g, alpha: %3.4g, dist: %3.4g, energy: %.2g\n', chromosome, dist, energy);
 end
