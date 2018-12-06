@@ -4,9 +4,9 @@ close all
 
 global HPARAMS POP E
 HPARAMS = [
-    {'kp_t', 200, 300};
-    {'kd_t', 10, 30};
-    {'kp_s', 200, 300};
+    {'kp_t', 150, 250};
+    {'kd_t', 10, 25};
+    {'kp_s', 150, 300};
     {'kd_s', 10, 30};
     {'alfa', 3, 20};
     {'t_target', 0, pi/12}
@@ -22,7 +22,7 @@ end
 min_values = cell2mat(HPARAMS(:, 2));
 max_values = cell2mat(HPARAMS(:, 3));
 
-ga_options = struct('Generations', 10, 'PopulationSize', 20);
+ga_options = struct('Generations', 10, 'PopulationSize', 50);
 IntCon = [1 2 3 4];
 optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values, [], IntCon, ga_options);
 
@@ -49,11 +49,12 @@ function val = fitness(chromosome)
     
     % Evaluate it here
     try
-        [dist, time, energy] = optimize_dist(q, dq, params, steps, 'hyp_tan');
-        val = - 2 * dist + time;
+        [dist, time, energy, step_deviation, step_size] = optimize_dist(q, dq, params, steps, 'hyp_tan');
+        val = - 2 * dist + time - step_size + 5 * step_deviation;
         dist
         time
         energy
+        step_size
         POP = cat(1, POP, cat(2, chromosome, dist, time, energy));
     catch
         warning('There was a problem with state-space calculation')
