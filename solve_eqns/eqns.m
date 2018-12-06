@@ -14,13 +14,14 @@ C = eval_C(q, dq);
 G = eval_G(q);
 B = eval_B();
 
-u = control(t, q, dq, q0, dq0, step_number); 
+u = control(t, q, dq, q0, dq0, step_number); % for the moment we set the control outputs to zero
+u_ext = perturbation(q, step_number); % perturbation torque due to the external force at hip
 
 n = 6;   
 dy = zeros(n, 1);
 dy(1) = y(4);
 dy(2) = y(5);
 dy(3) = y(6);
-dy(4:6) = M \ (-C*dq - G + B*u);
+dy(4:6) = M \ (-C*dq - G + B*(u + u_ext));
 
 end

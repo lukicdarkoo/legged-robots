@@ -1,9 +1,9 @@
 function u = control(t, q, dq, q0, dq0, step_number)
 
-params.kp_t = 380;
-params.kd_t = 11;
-params.kp_s = 387;
-params.kd_s = 38;
+params.kp_t = 400;
+params.kd_t = 27;
+params.kp_s = 282;
+params.kd_s = 40;
 
 % params.kp_t = 297;
 % params.kd_t = 36;
@@ -11,9 +11,9 @@ params.kd_s = 38;
 % params.kd_s = 5;
 
 
-params.sw_target = 0.52021;
+params.sw_target = pi/10;
 params.sw_delay = 0;
-params.t_target = 0.31803;
+params.t_target = 0.24019;
 
 %% wrong controller
 % u = wrong_controller(q, dq, params);
@@ -29,7 +29,7 @@ params.t_target = 0.31803;
 % u = spline_controller(q, dq, params)
 
 %% hyperbolic tangent controller
-params.alfa = 14.959;
+params.alfa = 12.748;
 u = htan_controller(q, dq, params);
 
 %% hyperbolic tangent 2

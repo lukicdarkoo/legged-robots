@@ -6,11 +6,16 @@
 % pi/8]
 % r0 is the position of the stance foot in the global frame. 
 %%
-function visualize(q, r0)
+function visualize(q, r0, step_number)
 
     % default r0 = [0; 0]
     if nargin == 1
         r0 = [0; 0];
+        step_number = -1;
+    end
+    
+    if nargin == 2
+        step_number = -1;
     end
 
     x0 = r0(1);
@@ -36,7 +41,13 @@ function visualize(q, r0)
     
     x_swf = l1*sin(q1) - l2*sin(q2) + x0;
     z_swf = l1*cos(q1) - l2*cos(q2) + z0;
-    
+    %% External perturbation 
+    [ext_step_number, value] = ext_perturbation_parameters();
+    if step_number == ext_step_number
+        F = value / 100;
+    else
+        F = 0;
+    end
     %% 
     % Here plot a schematic of the configuration of three link biped at the
     % generalized coordinate q = [q1, q2, q3]:
@@ -51,6 +62,13 @@ function visualize(q, r0)
     axis 'square'
     xlim([-1 + x_h, 1 + x_h]);
     ylim([-0.8, 1.2]);
+    % visualize external perturbation
+    delete(findall(gcf,'type','annotation'));
+    if step_number == ext_step_number
+        h = annotation('arrow', 'X', [1 / 2 - 0.1 * F, 1 / 2 + 0.02], 'Y', [(z_h + 0.8) / 2, (z_h + 0.8) / 2]);
+        h.Color = 'red';
+    end
+   % plot([x_h - F / 200, x_h], [z_h, z_h], 'linewidth', 2 * lw, 'color', 'r')
     % point masses
     mz = 40;
     plot(x1, z1, '.', 'markersize', mz); 
