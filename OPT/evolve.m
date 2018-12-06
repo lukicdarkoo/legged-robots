@@ -15,7 +15,7 @@ HPARAMS = [
 try
     POP = xlsread('population.xlsx');
 catch
-    POP = zeros(1, size(HPARAMS, 1) + 3);
+    POP = zeros(0, size(HPARAMS, 1) + 3);
 end
 
 % Run evolutive algorithm
