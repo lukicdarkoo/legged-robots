@@ -1,13 +1,13 @@
 addpath('./funct');
 
-global HPARAMS POP
+global HPARAMS POP E
 HPARAMS = [
-    {'kp_t', 200, 400};
-    {'kd_t', 10, 40};
-    {'kp_s', 200, 400};
-    {'kd_s', 10, 40};
-    {'alfa', 3, 15};
-    {'t_target', 0, pi/11}
+    {'kp_t', 200, 300};
+    {'kd_t', 10, 30};
+    {'kp_s', 200, 300};
+    {'kd_s', 10, 30};
+    {'alfa', 3, 20};
+    {'t_target', 0, pi/12}
 ];
 
 try
@@ -19,18 +19,20 @@ end
 % Run evolutive algorithm
 min_values = cell2mat(HPARAMS(:, 2));
 max_values = cell2mat(HPARAMS(:, 3));
-ga_options = struct('Generations', 10, 'PopulationSize', 50);
+ga_options = struct('Generations', 10, 'PopulationSize', 20);
 IntCon = [1 2 3 4];
 optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values, [], IntCon, ga_options);
 
 energy = sum(E);
-fprintf('Optimal Parameters:\n  kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %.5g, t_target: %.5g, alpha: %.5g \n', optimals);
+fprintf(['params.kp_t = %d; \nparams.kd_t = %d;', ... 
+    '\nparams.kp_s = %d; \nparams.kd_s = %d;', ...
+    '\nparams.alfa = %f; \nparams.t_target = %f;\n'], optimals);
 
 xlswrite('population.xlsx', POP);
 
 function val = fitness(chromosome)
     global POP
-    params.sw_target = pi/10;
+    params.sw_target = pi/11;
     q = [0; 0; 0];
     dq = [0; 0; 0];
     steps = 5;
@@ -45,8 +47,10 @@ function val = fitness(chromosome)
     % Evaluate it here
     try
         [dist, time, energy] = optimize_dist(q, dq, params, steps, 'hyp_tan');
-        val = - dist;
+        val = - 3 * dist + time;
         dist
+        time
+        energy
         % fprintf('kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %3.4g, t_target: %3.4g, alpha: %3.4g, dist: %3.4g, energy: %.2g \n\n', chromosome, dist, energy);
         POP = cat(1, POP, cat(2, chromosome, dist, time, energy));
     catch
