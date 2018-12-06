@@ -6,9 +6,8 @@ HPARAMS = [
     {'kd_t', 10, 40};
     {'kp_s', 200, 400};
     {'kd_s', 10, 40};
-    {'sw_target', pi/10, pi/6};
-    {'t_target', pi/10, pi/9};
-    {'alfa', 3, 15}
+    {'alfa', 3, 15};
+    {'t_target', 0, pi/11}
 ];
 
 
@@ -16,8 +15,7 @@ HPARAMS = [
 % Run evolutive algorithm
 min_values = cell2mat(HPARAMS(:, 2));
 max_values = cell2mat(HPARAMS(:, 3));
-ga_options = struct('Generations', 500, 'PopulationSize', 50);
-% optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values);
+ga_options = struct('Generations', 10, 'PopulationSize', 50);
 IntCon = [1 2 3 4];
 optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values, [], IntCon, ga_options);
 
@@ -26,21 +24,28 @@ fprintf('Optimal Parameters:\n  kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_t
 
 
 function val = fitness(chromosome)
+    params.sw_target = pi/10;
+    q = [0; 0; 0];
+    dq = [0; 0; 0];
+    steps = 5;
+    
+    params.t_target = val_by_id(chromosome, 't_target');
     params.kp_t = val_by_id(chromosome, 'kp_t');
     params.kd_t = val_by_id(chromosome, 'kd_t');
     params.kp_s = val_by_id(chromosome, 'kp_s');
     params.kd_s = val_by_id(chromosome, 'kd_s');
-    params.sw_target = val_by_id(chromosome, 'sw_target');
-    params.t_target = val_by_id(chromosome, 't_target');
     params.alfa = val_by_id(chromosome, 'alfa');
     
     % Evaluate it here
-    q = [0; 0; 0];
-    dq = [0.1; 0; 0];
-    steps = 5;
-    [dist, time, energy] = optimize_dist(q, dq, params, steps, 'hyp_tan');
-    val = - dist;
-    fprintf('kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %3.4g, t_target: %3.4g, alpha: %3.4g, dist: %3.4g, energy: %.2g\n', chromosome, dist, energy);
+    try
+        [dist, time, energy] = optimize_dist(q, dq, params, steps, 'hyp_tan');
+        val = - dist;
+        dist
+        % fprintf('kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %3.4g, t_target: %3.4g, alpha: %3.4g, dist: %3.4g, energy: %.2g \n\n', chromosome, dist, energy);
+    catch
+        warning('There was a problem with state-space calculation')
+        val = realmax;
+    end
 end
 
 function val = val_by_id(chromosome, id)
