@@ -2,7 +2,7 @@ addpath('./funct');
 clc
 close all
 
-global HPARAMS POP E
+global HPARAMS POP
 HPARAMS = [
     {'kp_t', 150, 250};
     {'kd_t', 10, 25};
@@ -26,7 +26,6 @@ ga_options = struct('Generations', 10, 'PopulationSize', 50);
 IntCon = [1 2 3 4];
 optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values, [], IntCon, ga_options);
 
-energy = sum(E);
 fprintf(['params.kp_t = %d; \nparams.kd_t = %d;', ... 
     '\nparams.kp_s = %d; \nparams.kd_s = %d;', ...
     '\nparams.alfa = %f; \nparams.t_target = %f;\n'], optimals);
