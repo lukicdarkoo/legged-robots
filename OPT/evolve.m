@@ -21,11 +21,11 @@ end
 % Run evolutive algorithm
 min_values = cell2mat(HPARAMS(:, 2));
 max_values = cell2mat(HPARAMS(:, 3));
-ga_options = struct('Generations', 10, 'PopulationSize', 50);
+ga_options = struct('Generations', 50, 'PopulationSize', 50);
 IntCon = [1 2 3 4];
 optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values, [], IntCon, ga_options);
 
-fprintf('Optimal Parameters:\n  kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %.5g, t_target: %.5g, alpha: %.5g \n', optimals);
+fprintf('Optimal Parameters:\n  kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, t_target: %.5g, alpha: %.5g \n', optimals);
 
 xlswrite('population.xlsx', POP);
 
@@ -47,8 +47,8 @@ function val = fitness(chromosome)
     try
         [dist, time, energy] = optimize_dist(q, dq, params, steps, 'hyp_tan');
         val = - dist;
-        dist
-        % fprintf('kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %3.4g, t_target: %3.4g, alpha: %3.4g, dist: %3.4g, energy: %.2g \n\n', chromosome, dist, energy);
+%         dist
+%         fprintf('kp_t: %3d, kd_t: %3d, kp_s: %3d, kd_s: %3d, sw_target: %3.4g, t_target: %3.4g, alpha: %3.4g, dist: %3.4g, energy: %.2g \n\n', chromosome, dist, energy);
         POP = cat(1, POP, cat(2, chromosome, dist, time, energy));
     catch
         warning('There was a problem with state-space calculation')
