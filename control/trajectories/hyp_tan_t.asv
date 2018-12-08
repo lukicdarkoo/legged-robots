@@ -1,0 +1,11 @@
+function [e_q, e_dq] = hyp_tan_t(q, dq, sw_target, f, t)
+t = t * f;
+X = sw_target * sin(f * pi / 2 * t);
+q2_0 = - sw_target * tanh(pi * X);
+dq2_0 = - pi * sw_target * (sech(pi * X))^2;
+
+e_q = q(2) - q2_0;
+e_dq = dq(2) - dq2_0;
+
+fprintf('time: %3.3g    x: %3.3g     q2_0: %3.3g\n', t, X, q2_0);
+end

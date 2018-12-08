@@ -48,12 +48,12 @@ function val = fitness(chromosome)
     
     % Evaluate it here
     try
-        [dist, time, energy, step_deviation, step_size] = optimize_dist(q, dq, params, steps, 'hyp_tan');
+        [dist, time, energy, step_deviation, step_size] = optimize_dist(q, dq, params, steps, 'hyp_tan_t');
         val = - 2 * dist + time - step_size + 5 * step_deviation;
-        dist
-        time
-        energy
-        step_size
+%         dist
+%         time
+%         energy
+%         step_size
         POP = cat(1, POP, cat(2, chromosome, dist, time, energy));
     catch
         warning('There was a problem with state-space calculation')
