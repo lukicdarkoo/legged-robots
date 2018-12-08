@@ -10,8 +10,7 @@ params.kd_s = 16;
 params.alfa = 17.89; 
 params.t_target = 0.177797;
 
-params.f = 4; %%Hz (should be)
-
+params.f = 4; %%Hz
 %% wrong controller
 % u = wrong_controller(q, dq, params);
 
