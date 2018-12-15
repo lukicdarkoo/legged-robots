@@ -7,6 +7,7 @@
 % As an example you can use q0 = [pi/6; -pi/3; 0] and dq0 = [0;0;8]. 
 
 function sln = solve_eqns(q0, dq0, num_steps)
+global t_1 t_0
 
 options = odeset('RelTol',1e-5, 'Events', @event_func);
 h = 0.001; % time step
@@ -41,6 +42,9 @@ for i = 1:num_steps
     y0 = [q_p; dq_p];
     t0 = T(end);
     
+    t_0 = t_1;
+    t_1 = t0;
+    fprintf('%g\n%', t0)
 end
 end
 

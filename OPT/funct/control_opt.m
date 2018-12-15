@@ -10,6 +10,8 @@ switch c_type
         u = htan2_controller(q, dq, params);
     case 'hyp_tan_t'
         u = htant_controller(q, dq, params, t);
+    case 'exp'
+        u = experimental(q, dq, params);
 end
 
 end
