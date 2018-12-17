@@ -16,7 +16,7 @@ global params
 % u = spline_controller(q, dq, params)
 
 %% hyperbolic tangent controller
-u = htan_controller(q, dq, params)
+u = htan_controller(q, dq, params);
 
 %% hyperbolic tangent controller with frequency control
 % u = htant_controller(q, dq, params, t);

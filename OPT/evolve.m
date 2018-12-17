@@ -11,7 +11,7 @@ HPARAMS = [
     {'kp_s', 100, 500};
     {'kd_s', 10, 40};
     {'sw_target', pi/15, pi/10};
-    {'t_target', pi/12, pi/7}
+    {'t_target', pi/12, pi/8}
 ];
 
 try
@@ -24,7 +24,7 @@ end
 min_values = cell2mat(HPARAMS(:, 2));
 max_values = cell2mat(HPARAMS(:, 3));
 
-ga_options = struct('Generations', 10, 'PopulationSize', 50);
+ga_options = struct('Generations', 5, 'PopulationSize', 50);
 total = (ga_options.Generations + 1) * ga_options.PopulationSize;
 IntCon = [1 2 3 4];
 optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values, [], IntCon, ga_options);
