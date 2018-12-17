@@ -1,6 +1,7 @@
 % You can set any hyper parameters of the control function here; you may or
 % may not want to use the step_number as the input of the function. 
 function [params] = control_hyper_parameters()
+clearvars params
 try
     load('params.mat', 'params');
 catch
