@@ -17,7 +17,7 @@ G = eval_G(q);
 B = eval_B();
 
 %control action
-u = control_opt(t, q, dq, params, c_type); 
+u = control_opt(t, q, dq, params, c_type, step_number); 
 
 %Energy: sum of positive work
 E = E + u .* (u>0);

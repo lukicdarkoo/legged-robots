@@ -2,7 +2,7 @@ function dy = eqns(t, y, y0, step_number)
 % n this is the dimension of the ODE, note that n is 2*DOF, why? 
 % y1 = q1, y2 = q2, y3 = q3, y4 = dq1, y5 = dq2, y6 = dq3
 % y0 is the states right after impact
-
+global U
 q = [y(1); y(2); y(3)];
 dq = [y(4); y(5); y(6)];
 
@@ -15,6 +15,7 @@ G = eval_G(q);
 B = eval_B();
 
 u = control(t, q, dq, q0, dq0, step_number); % for the moment we set the control outputs to zero
+U = [U [u; t]];
 u_ext = perturbation(q, step_number); % perturbation torque due to the external force at hip
 
 n = 6;   

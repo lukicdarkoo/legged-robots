@@ -1,5 +1,5 @@
 addpath('./funct');
-clc
+
 close all
 
 global HPARAMS POP i total 
@@ -7,9 +7,9 @@ i = 0;
 
 HPARAMS = [
     {'kp_t', 100, 500};
-    {'kd_t', 10, 40};
+    {'kd_t', 2, 40};
     {'kp_s', 100, 500};
-    {'kd_s', 10, 40};
+    {'kd_s', 2, 40};
     {'sw_target', pi/15, pi/10};
     {'t_target', pi/12, pi/8}
 ];
@@ -24,7 +24,7 @@ end
 min_values = cell2mat(HPARAMS(:, 2));
 max_values = cell2mat(HPARAMS(:, 3));
 
-ga_options = struct('Generations', 5, 'PopulationSize', 50);
+ga_options = struct('Generations', 1, 'PopulationSize', 200);
 total = (ga_options.Generations + 1) * ga_options.PopulationSize;
 IntCon = [1 2 3 4];
 optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values, [], IntCon, ga_options);
@@ -34,7 +34,6 @@ fprintf(['params.kp_t = %d; \nparams.kd_t = %d;', ...
     '\nparams.sw_target = %f; \nparams.t_target = %f;\n'], optimals);
 
 %% saving results and params to file
-xlswrite('population.xlsx', POP);
 
 params.kp_t = optimals(1);
 params.kd_t = optimals(2);
@@ -43,7 +42,15 @@ params.kd_s = optimals(4);
 params.sw_target = optimals(5);
 params.t_target = optimals(6);
 
-save('params.mat', 'params');
+try
+    xlswrite('./SAVES/population.xlsx', POP);
+    save('./SAVES/params.mat', 'params');
+catch
+    mkdir('./SAVES');
+    save('./SAVES/params.mat', 'params');
+    xlswrite('./SAVES/population.xlsx', POP);
+end
+    
 %% 
 run;
 
@@ -66,8 +73,8 @@ function val = fitness(chromosome)
     try
         [dist, time, energy, step_deviation, step_size] = optimize(q, dq, params, steps, 'hyp_tan');
 %         val = - 2 * dist + time - step_size + 5 * step_deviation;
-%           val = - dist;
-          val = - dist - 2 * dist/time - 2 * step_size * steps / time + 3;
+        val = - dist;
+%         val = - dist - 2 * dist/time - 2 * step_size * steps / time + 3;
 %         dist
 %         time
 %         energy

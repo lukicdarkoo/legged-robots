@@ -1,7 +1,6 @@
 function u = control(t, q, dq, q0, dq0, step_number)
 
-global params
-
+params = control_hyper_parameters(step_number);
 %% wrong controller
 % u = wrong_controller(q, dq, params);
 
@@ -28,4 +27,9 @@ u = htan_controller(q, dq, params);
 %% experimental
 % u = experimental(q, dq, params);
 
-end
+%% linear
+% u = linear_controller(q, dq, params);
+
+%% saturation
+if abs(u(1)) > 30; u(1) = sign(u(1)) * 30; end
+if abs(u(2)) > 30; u(2) = sign(u(2)) * 30; end
