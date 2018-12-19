@@ -1,7 +1,9 @@
 function u = control_opt(t, q, dq, params, c_type, step_number)
 u = zeros(2, 1);
+
 if step_number > 10; step_number = 10; end
 params.t_target = params.t_target / 10 * step_number;
+
 switch c_type
     case 'hyp_tan'
         u = htan_controller(q, dq, params);

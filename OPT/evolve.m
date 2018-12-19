@@ -6,12 +6,12 @@ global HPARAMS POP i total
 i = 0;
 
 HPARAMS = [
-    {'kp_t', 100, 500};
-    {'kd_t', 2, 40};
-    {'kp_s', 100, 500};
-    {'kd_s', 2, 40};
-    {'sw_target', pi/15, pi/10};
-    {'t_target', pi/12, pi/8}
+    {'kp_t', 650, 750};
+    {'kd_t', 15, 25};
+    {'kp_s', 650, 750};
+    {'kd_s', 25, 35};
+    {'sw_target', pi/25, pi/15};
+    {'t_target', pi/35, pi/25}
 ];
 
 try
@@ -24,7 +24,8 @@ end
 min_values = cell2mat(HPARAMS(:, 2));
 max_values = cell2mat(HPARAMS(:, 3));
 
-ga_options = struct('Generations', 1, 'PopulationSize', 200);
+ga_options = struct('Generations', 5, 'PopulationSize', 500 );
+% ga_options = optimoptions('ga','UseParallel', true, 'UseVectorized', false, 'Generations', 5, 'PopulationSize', 500);
 total = (ga_options.Generations + 1) * ga_options.PopulationSize;
 IntCon = [1 2 3 4];
 optimals = ga(@fitness, size(HPARAMS, 1), [], [], [], [], min_values, max_values, [], IntCon, ga_options);
@@ -54,12 +55,11 @@ end
 %% 
 run;
 
-
 function val = fitness(chromosome)
     global POP i total
     q = [0; 0; 0];
     dq = [0; 0; 0];
-    steps = 10;
+    steps = 20;
     params.alfa = 10;
     
     params.sw_target = val_by_id(chromosome, 'sw_target');
@@ -71,7 +71,7 @@ function val = fitness(chromosome)
     
     % Evaluate it here
     try
-        [dist, time, energy, step_deviation, step_size] = optimize(q, dq, params, steps, 'hyp_tan');
+        [dist, time, energy, step_deviation, step_size] = optimize(q, dq, params, steps, 'exp');
 %         val = - 2 * dist + time - step_size + 5 * step_deviation;
         val = - dist;
 %         val = - dist - 2 * dist/time - 2 * step_size * steps / time + 3;

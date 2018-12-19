@@ -68,7 +68,7 @@ function visualize(q, r0, step_number)
         h = annotation('arrow', 'X', [1 / 2 - 0.1 * F, 1 / 2 + 0.02], 'Y', [(z_h + 0.8) / 2, (z_h + 0.8) / 2]);
         h.Color = 'red';
     end
-   % plot([x_h - F / 200, x_h], [z_h, z_h], 'linewidth', 2 * lw, 'color', 'r')
+    plot([x_h - F / 200, x_h], [z_h, z_h], 'linewidth', 2 * lw, 'color', 'r')
     % point masses
     mz = 40;
     plot(x1, z1, '.', 'markersize', mz); 

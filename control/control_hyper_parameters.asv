@@ -6,26 +6,29 @@ clearvars params
 %     load('SAVES/params.mat', 'params');
 % catch
 %     fprintf('\ncould not load params, using default.\n');
-    params.sw_target = 0.15166;
-    params.kp_t = 500; 
+    params.sw_target = 0.16166;
+    params.kp_t = 700; 
     params.kd_t = 20;
-    params.kp_s = 900; 
+    params.kp_s = 700; 
     params.kd_s = 30;
     params.alfa = 16.29; 
     params.t_target = 0.14;
     params.f = 6; %%Hz
 
 % end
-s = 20;
-if step_number > s; step_number = s; end
-params.t_target = params.t_target + 0.06 / s * step_number;
-% params.sw_target = params.sw_target - 0.01 / s * step_number; 
+
+if step_number > 20; step_number = 20; end
+params.t_target = 0.14 + 0.2 / 20 * step_number;
+
+if step_number > 10; step_number = 10; end 
+params.sw_target = params.sw_target / 4 + params.sw_target / 5 * step_number; 
 
 
+% if step_number > 20; step_number = 20; end
+% params.t_target = params.t_target / 20 * step_number;
 
-% if step_number > s; step_number = s; end
-% params.t_target = params.t_target / s * step_number;
-
+% if step_number > 5; step_number = 5; end 
+% params.sw_target = params.sw_target / 4 + params.sw_target / 5 * step_number; 
 end
 
 

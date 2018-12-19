@@ -1,15 +1,8 @@
 function [e_q, e_dq] = exp_traj(q, dq, sw_target)
-
-q2_0 = -q(1);
-dq2_0 =  - dq(1);
-
-if abs(q2_0) > sw_target
-    q2_0 = sign(q2_0) * sw_target;
-    dq2_0 = 0;
-end
+k = 1.28087807105;
+q2_0 = - k * sw_target * tanh(pi * q(1) / sw_target / 3);
+dq2_0 = - k * pi / 3 * (sech(pi * q(1) / sw_target / 3))^2;
 
 e_q = q(2) - q2_0;
 e_dq = dq(2) - dq2_0;
-
-% fprintf('time: %3.3g     q2_0: %3.3g\n', t, q2_0);
 end
