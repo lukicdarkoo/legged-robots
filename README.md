@@ -4,7 +4,7 @@
 Here is a schematic of the three-link 2D biped:
 
 <figure align = "center">
-<img src = "../fig/three_link_biped.png">
+<img src = "docs/walk.gif">
 <figcaption> Three-link 2D Biped </figcaption> 
 </figure>
 

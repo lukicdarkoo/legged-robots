@@ -1,6 +1,6 @@
 close all
 clear all
-% set_path
+set_path
 clearvars U
 global U
 U = [];

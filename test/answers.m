@@ -1,4 +1,4 @@
-function answers()
+Rfunction answers()
     % Answer 1
     fprintf('Answer 1\n');
     fprintf('The potential energy is the same before and after impact\n\n');
